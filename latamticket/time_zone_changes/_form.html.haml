@@ -1,0 +1,14 @@
+- model_class = TimeZoneChange
+
+= render '/base_errors', owner: @time_zone_change
+= simple_form_for [:admin, @time_zone_change] do |f|
+  .row
+    .row.custom-row-margin-left
+      =f.input :base_agency_id, input_html: {class: 'custom-input-width typeahead'}, :collection => BaseAgency.all, placeholder:"#{model_class.human_attribute_name(:base_agency)}", include_blank: false, type: "text", autocomplete: 'on', label: model_class.human_attribute_name(:base_agency)
+      =f.input :start_date, input_html: {class: 'date input-small'}, as: :string, label: model_class.human_attribute_name(:start_date_utc)
+      =f.input :start_time_utc, input_html: {class: 'time input-small'}, as: :string
+      =f.input :zone, collection: TimeZoneChange.all_zones, label_method: ->(z) {z[:label]}, value_method: ->(z) {z[:value]}
+  .clearfix
+  .actions.form-actions.custom-form-actions-with-datatables-pagination
+    = f.button :submit, :class => 'btn-primary'
+    = link_to t("helpers.links.female.cancel", model: model_class.model_name.human.downcase), polymorphic_path([:admin, model_class]), :class => 'btn'

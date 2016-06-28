@@ -1,0 +1,30 @@
+- model_class = TimeZoneChange
+.page-header
+  %h1= model_class.model_name.human.titleize
+- present(@time_zone_change) do |zone_change|
+  .container
+    .span6.well.clean
+      %dl
+        %dt{ style: "margin: 20px 0 10px;" }
+          %strong= model_class.human_attribute_name(:base_agency) + ':'
+        %dd= zone_change.base_agency
+
+        %dt{ style: "margin: 20px 0 10px;" }
+          %strong= model_class.human_attribute_name(:start_date_utc) + ':'
+        %dd= zone_change.start_date_utc
+
+        %dt{ style: "margin: 20px 0 10px;" }
+          %strong= model_class.human_attribute_name(:start_time_utc) + ':'
+        %dd= zone_change.start_time_utc
+
+        %dt{ style: "margin: 20px 0 10px;" }
+          %strong= model_class.human_attribute_name(:zone) + ':'
+        %dd= zone_change.zone
+
+.form-actions
+  - if can? :read, model_class
+    = link_to t("helpers.links.male.back",    model: model_class.model_name.human.downcase), polymorphic_path([:admin, model_class]), :class => 'btn'
+  - if can? :update, @time_zone_change
+    = link_to t("helpers.links.male.edit",    model: model_class.model_name.human.downcase), edit_polymorphic_path([:admin, @time_zone_change]), :class => 'btn'
+  -if can? :destroy, @time_zone_change
+    = link_to t("helpers.links.male.destroy", model: model_class.model_name.human.downcase), polymorphic_path([:admin, @time_zone_change]), :method => "delete", :data => { :confirm => t("helpers.confirm.male.destroy", model: model_class.model_name.human.downcase)}, :class => 'btn btn-danger'

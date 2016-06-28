@@ -1,0 +1,14 @@
+- model_class = TimeZoneChange
+.page-header
+  %h1= model_class.model_name.human(count: 2)
+- if can? :create, model_class
+  = link_to t("helpers.links.male.new", model:  model_class.model_name.human.downcase), new_polymorphic_path([:admin, model_class]), :class => 'btn btn-primary'
+%table.table.table-striped{:id => "time_zone_changes", "data-source" => polymorphic_path([:admin, model_class], format: "json") }
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:base_agency)
+      %th= model_class.human_attribute_name(:start_date_utc)
+      %th= model_class.human_attribute_name(:start_time_utc)
+      %th= model_class.human_attribute_name(:time_zone)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
